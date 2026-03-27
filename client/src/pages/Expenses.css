@@ -1,0 +1,19 @@
+.expense-layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+@media (max-width: 750px) {
+  .expense-layout { grid-template-columns: 1fr; }
+}
+.expense-form h3 { margin-bottom: 1rem; }
+.expense-list { display: flex; flex-direction: column; gap: 0.6rem; }
+.expense-item { display: flex; justify-content: space-between; align-items: center; }
+.expense-top { display: flex; gap: 0.75rem; align-items: center; margin-bottom: 0.2rem; }
+.cat-badge {
+  font-size: 0.75rem; font-weight: 700; text-transform: capitalize;
+  padding: 2px 8px; border-radius: 20px; background: #f3f4f6;
+}
+.expense-desc { font-size: 0.83rem; color: var(--muted); margin-bottom: 0.2rem; }
+.expense-date { font-size: 0.78rem; color: #aaa; }

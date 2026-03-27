@@ -1,0 +1,450 @@
+/* Backdrop */
+.rc-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(30, 15, 5, 0.72);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    animation: rcFadeIn 0.2s ease;
+}
+
+@keyframes rcFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Modal */
+.rc-modal {
+    background: var(--surface);
+    border-radius: 16px;
+    width: 100%;
+    max-width: 680px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.35);
+    animation: rcSlideUp 0.25s ease;
+}
+
+@keyframes rcSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scrollbar */
+.rc-modal::-webkit-scrollbar {
+    width: 5px;
+}
+
+.rc-modal::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.rc-modal::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 10px;
+}
+
+/* Close button */
+.rc-close {
+    position: sticky;
+    top: 12px;
+    float: right;
+    margin: 12px 12px 0 0;
+    width: 34px;
+    height: 34px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: background 0.15s;
+}
+
+.rc-close:hover {
+    background: var(--cream);
+}
+
+.rc-close svg {
+    width: 15px;
+    height: 15px;
+    color: var(--primary-dark);
+}
+
+/* Image */
+.rc-image {
+    width: 100%;
+    aspect-ratio: 16 / 7;
+    position: relative;
+    overflow: hidden;
+    background: var(--surface-2);
+    border-radius: 16px 16px 0 0;
+}
+
+.rc-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rc-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, var(--surface-2), var(--cream));
+}
+
+.rc-image-placeholder svg {
+    width: 64px;
+    height: 64px;
+    color: var(--accent);
+    opacity: 0.4;
+}
+
+.rc-image-placeholder span {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* Image badges */
+.rc-image-badges {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.rc-badge {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.rc-badge.cuisine {
+    background: rgba(68, 45, 28, 0.75);
+    color: var(--cream);
+}
+
+.rc-badge.category {
+    background: rgba(68, 45, 28, 0.55);
+    color: var(--cream);
+}
+
+.rc-badge.difficulty {
+    color: #fff;
+}
+
+/* Body */
+.rc-body {
+    padding: 1.5rem;
+}
+
+/* Header */
+.rc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.rc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    line-height: 1.3;
+    margin-bottom: 0.35rem;
+}
+
+.rc-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.rc-heart {
+    flex-shrink: 0;
+    background: var(--surface-2);
+    border: 1.5px solid var(--border);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--border);
+    transition: color 0.2s, border-color 0.2s, transform 0.15s;
+}
+
+.rc-heart svg {
+    width: 18px;
+    height: 18px;
+}
+
+.rc-heart:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+    transform: scale(1.1);
+}
+
+.rc-heart.saved {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* Stats */
+.rc-stats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    background: var(--surface-2);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border);
+}
+
+.rc-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.35rem;
+}
+
+.rc-stat svg {
+    width: 18px;
+    height: 18px;
+    color: var(--primary);
+}
+
+.rc-stat-val {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+.rc-stat-lbl {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+/* Tabs */
+.rc-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 1.25rem;
+}
+
+.rc-tab {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    padding: 0.6rem 1.25rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.rc-tab:hover {
+    color: var(--primary);
+}
+
+.rc-tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+/* Ingredients */
+.rc-ingredients {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.rc-ingredient-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.rc-ingredient-row:last-child {
+    border-bottom: none;
+}
+
+.rc-ingredient-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+    flex-shrink: 0;
+}
+
+.rc-ingredient-name {
+    flex: 1;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    color: var(--text);
+    text-transform: capitalize;
+}
+
+.rc-ingredient-qty {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-weight: 500;
+}
+
+/* Steps */
+.rc-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.rc-step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.rc-step-num {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    background: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-top: 2px;
+}
+
+.rc-step-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    color: var(--text);
+    line-height: 1.7;
+}
+
+.rc-empty {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-style: italic;
+    padding: 1rem 0;
+}
+
+/* Loading skeleton */
+.rc-loading {
+    padding: 1rem;
+}
+
+.rc-skeleton-img {
+    width: 100%;
+    aspect-ratio: 16/7;
+    background: linear-gradient(90deg, var(--surface-2) 25%, var(--cream) 50%, var(--surface-2) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.rc-skeleton-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.5rem;
+}
+
+.rc-sk-line {
+    height: 14px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--surface-2) 25%, var(--cream) 50%, var(--surface-2) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+}
+
+.rc-sk-line.long {
+    width: 75%;
+}
+
+.rc-sk-line.medium {
+    width: 55%;
+}
+
+.rc-sk-line.short {
+    width: 35%;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .rc-stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .rc-title {
+        font-size: 1.25rem;
+    }
+}

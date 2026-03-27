@@ -1,0 +1,71 @@
+.pantry-form {
+  margin-bottom: 1.75rem;
+}
+
+.pantry-form h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--primary-dark);
+}
+
+.pantry-form-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr auto;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+@media (max-width: 700px) {
+  .pantry-form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.pantry-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.pantry-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+  border-left: 3px solid var(--border);
+  transition: border-color 0.2s;
+}
+
+.pantry-item:hover {
+  border-color: var(--accent);
+}
+
+.pantry-item.expiring {
+  border-left-color: var(--primary-light);
+  background: #FDF6EC;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.item-info strong {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+.item-info span {
+  font-size: 0.82rem;
+  color: var(--muted);
+  font-family: 'Inter', sans-serif;
+}
+
+.expiry-tag {
+  font-size: 0.78rem !important;
+  color: var(--primary-light) !important;
+  font-weight: 600 !important;
+}

@@ -1,0 +1,340 @@
+.home-hero {
+  padding: 3rem 2.5rem;
+  margin-bottom: 1.5rem;
+  background: var(--primary-dark);
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 80% 50%, rgba(116, 48, 20, 0.6) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.home-hero h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: var(--cream);
+  margin-bottom: 0.5rem;
+}
+
+.home-hero p {
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.expiry-alert {
+  border-left: 4px solid var(--primary-light);
+  background: #FDF6EC;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+}
+
+.expiry-alert h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: var(--primary);
+}
+
+.expiry-alert ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.expiry-alert li {
+  font-size: 0.88rem;
+  color: var(--text);
+}
+
+.home-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-left: 3px solid var(--cream);
+}
+
+.stat-icon {
+  width: 42px;
+  height: 42px;
+  background: var(--cream);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stat-icon svg {
+  width: 20px;
+  height: 20px;
+  color: var(--primary);
+}
+
+.stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.quick-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.quick-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  text-decoration: none;
+  color: var(--text);
+  border-left: 3px solid var(--cream);
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.quick-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(68, 45, 28, 0.1);
+}
+
+.quick-card strong {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  color: var(--primary-dark);
+}
+
+.quick-card span {
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.quick-card-icon {
+  width: 32px;
+  height: 32px;
+  background: var(--cream);
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.25rem;
+}
+
+.quick-card-icon svg {
+  width: 16px;
+  height: 16px;
+  color: var(--primary);
+}
+
+/* ── Meals For You ── */
+.meals-section {
+  margin-top: 2.5rem;
+}
+
+.meals-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.meals-section-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--primary-dark);
+}
+
+.explore-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: gap 0.2s;
+}
+
+.explore-link:hover {
+  gap: 0.65rem;
+}
+
+.explore-link svg {
+  width: 18px;
+  height: 18px;
+}
+
+.meals-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.meal-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 16px;
+}
+
+.meal-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 32px rgba(68, 45, 28, 0.12);
+}
+
+.meal-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.meal-img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--surface-2) 0%, var(--cream) 100%);
+}
+
+.meal-img-placeholder svg {
+  width: 48px;
+  height: 48px;
+  color: var(--accent);
+  opacity: 0.5;
+}
+
+.meal-uses-badge {
+  display: inline-block;
+  margin: 0.5rem 1.1rem 0;
+  background: transparent;
+  color: var(--primary);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.meal-info {
+  padding: 0.4rem 1.1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.meal-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.meal-title-row h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  line-height: 1.3;
+}
+
+.meal-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.meal-btn {
+  font-size: 0.72rem;
+  padding: 0.35rem 0.85rem;
+  text-decoration: none;
+  border-radius: 20px;
+}
+
+.meal-time {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* heart btn (reuse from Recommendations) */
+.heart-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  color: var(--border);
+  transition: color 0.2s, transform 0.15s;
+  flex-shrink: 0;
+}
+
+.heart-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.heart-btn:hover {
+  color: var(--primary);
+  transform: scale(1.15);
+}
+
+.heart-btn.saved {
+  color: var(--primary);
+}
+
+.meal-btn {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  background: var(--primary);
+  color: var(--cream);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: background 0.2s;
+}
+
+.meal-btn:hover {
+  background: var(--primary-dark);
+}
+
+@media (max-width: 700px) {
+  .meals-grid {
+    grid-template-columns: 1fr;
+  }
+}
