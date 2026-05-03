@@ -6,7 +6,7 @@ export default function Chatbot() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const bottomRef = useRef(null);
+  const chatWindowRef = useRef(null);
 
   useEffect(() => {
     getChatHistory().then(r => {
@@ -15,7 +15,12 @@ export default function Chatbot() {
   }, []);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (chatWindowRef.current) {
+      chatWindowRef.current.scrollTo({
+        top: chatWindowRef.current.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
   }, [messages]);
 
   const handleSend = async () => {
@@ -50,7 +55,7 @@ export default function Chatbot() {
       <h1 className="page-title">Ask Remy</h1>
       <p className="chat-sub">Your Smart Kitchen Companion: Ask, Cook, Enjoy.</p>
 
-      <div className="chat-window card">
+      <div className="chat-window card" ref={chatWindowRef}>
         {messages.length === 0 && (
           <div className="chat-empty">
             <img src="/remy.png" alt="Remy" className="tony-avatar avatar-img" />
@@ -80,7 +85,6 @@ export default function Chatbot() {
               </div>
             </div>
           )}
-          <div ref={bottomRef} />
         </div>
       </div>
 

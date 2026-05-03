@@ -1,31 +1,182 @@
+.home-container {
+  width: 100%;
+}
+
 .home-hero {
-  padding: 3rem 2.5rem;
-  margin-bottom: 1.5rem;
-  background: var(--primary-dark);
-  border: none;
+  width: 100%;
+  min-height: calc(100vh - 65px); /* approx navbar height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  background: var(--surface-2);
   position: relative;
   overflow: hidden;
+  text-align: center;
 }
 
 .home-hero::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 80% 50%, rgba(116, 48, 20, 0.6) 0%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(132, 88, 43, 0.1) 0%, transparent 70%);
   pointer-events: none;
 }
 
-.home-hero h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  color: var(--cream);
-  margin-bottom: 0.5rem;
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
 }
 
-.home-hero p {
-  color: var(--accent);
+.hero-text-col {
+  flex: 1;
+  text-align: left;
+  max-width: 600px;
+}
+
+.hero-img-col {
+  flex: 1;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+
+.floating-img {
+  position: absolute;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(68, 45, 28, 0.15);
+  transition: transform 0.3s ease;
+  background: white;
+  padding: 8px; /* little border effect */
+}
+
+.floating-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.img-one {
+  width: 250px;
+  height: 250px;
+  top: 10%;
+  left: 10%;
+  z-index: 2;
+  animation: float 6s ease-in-out infinite;
+}
+
+.img-two {
+  width: 200px;
+  height: 200px;
+  bottom: 10%;
+  right: 15%;
+  z-index: 1;
+  animation: float 8s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(2deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.brand-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--primary-dark);
   margin-bottom: 1.5rem;
-  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  text-shadow: 4px 6px 12px rgba(68, 45, 28, 0.35);
+}
+
+.hero-tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+  max-width: 600px;
+}
+
+.hero-btn {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.85rem 2.2rem;
+  border-radius: 40px;
+  background: var(--primary);
+  color: var(--bg);
+  border: 1px solid var(--primary);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.hero-btn:hover {
+  background: transparent;
+  color: var(--primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(68, 45, 28, 0.1);
+}
+
+@media (max-width: 900px) {
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .hero-text-col {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .hero-tagline {
+    margin-inline: auto;
+  }
+  
+  .hero-img-col {
+    width: 100%;
+    height: 300px;
+  }
+  
+  .img-one {
+    width: 200px;
+    height: 200px;
+    left: 5%;
+  }
+  
+  .img-two {
+    width: 150px;
+    height: 150px;
+    right: 5%;
+  }
+}
+
+@media (max-width: 768px) {
+  .brand-title {
+    font-size: 3.5rem;
+  }
+  
+  .hero-tagline {
+    font-size: 0.95rem;
+  }
 }
 
 .expiry-alert {
@@ -276,10 +427,18 @@
 }
 
 .meal-btn {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
   font-size: 0.72rem;
-  padding: 0.35rem 0.85rem;
+  font-weight: 600;
+  padding: 0.4rem 0.85rem;
+  border-radius: 4px;
+  background: var(--primary);
+  color: var(--cream);
   text-decoration: none;
-  border-radius: 20px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  transition: background 0.2s;
 }
 
 .meal-time {
@@ -313,20 +472,6 @@
 
 .heart-btn.saved {
   color: var(--primary);
-}
-
-.meal-btn {
-  display: inline-block;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 0.35rem 0.85rem;
-  border-radius: 20px;
-  background: var(--primary);
-  color: var(--cream);
-  text-decoration: none;
-  letter-spacing: 0.02em;
-  transition: background 0.2s;
 }
 
 .meal-btn:hover {

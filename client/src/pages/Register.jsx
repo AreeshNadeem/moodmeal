@@ -43,7 +43,7 @@ export default function Register() {
           </div>
           <div className="form-group">
             <label>Password</label>
-            <input type="password" placeholder="Min 6 characters" minLength={6} required
+            <input type="password" placeholder="Min 6, Max 20 chars" minLength={6} maxLength={20} required
               value={form.password} onChange={e => setForm({...form, password: e.target.value})} />
           </div>
           <button className="btn btn-primary auth-btn" type="submit" disabled={loading}>

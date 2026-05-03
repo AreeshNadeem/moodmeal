@@ -263,9 +263,14 @@ export default function Settings() {
                             </div>
                             <div className="form-group" style={{ maxWidth: 320 }}>
                                 <label>Weekly Food Budget</label>
-                                <input type="number" min="0" placeholder="e.g. 3000"
+                                <input type="number" min="200" max="20000" placeholder="e.g. 3000"
                                     value={prefs.weekly_budget}
-                                    onChange={e => setPrefs({ ...prefs, weekly_budget: e.target.value })} />
+                                    onChange={e => {
+                                        let val = e.target.value;
+                                        if (val !== '' && Number(val) > 20000) val = '20000';
+                                        if (val !== '' && Number(val) < 0) val = '200';
+                                        setPrefs({ ...prefs, weekly_budget: val });
+                                    }} />
                             </div>
                             <div className="form-group" style={{ maxWidth: 320 }}>
                                 <label>Currency</label>
@@ -303,7 +308,7 @@ export default function Settings() {
                                 </div>
                                 <div className="form-group">
                                     <label>New Password</label>
-                                    <input type="password" placeholder="Min 6 characters"
+                                    <input type="password" placeholder="Min 6, Max 20 chars" minLength={6} maxLength={20}
                                         value={pwForm.new_password}
                                         onChange={e => setPwForm({ ...pwForm, new_password: e.target.value })} />
                                 </div>

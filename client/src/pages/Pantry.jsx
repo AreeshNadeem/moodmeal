@@ -42,8 +42,13 @@ export default function Pantry() {
           </div>
           <div className="form-group">
             <label>Quantity</label>
-            <input required type="number" min="0" placeholder="e.g. 6" value={form.quantity}
-              onChange={e => setForm({...form, quantity: e.target.value})} />
+            <input required type="number" min="0.1" max="10000" step="any" placeholder="e.g. 6" value={form.quantity}
+              onChange={e => {
+                let val = e.target.value;
+                if (val !== '' && Number(val) > 10000) val = '10000';
+                if (val !== '' && Number(val) < 0) val = '0.1';
+                setForm({...form, quantity: val});
+              }} />
           </div>
           <div className="form-group">
             <label>Unit</label>
@@ -59,7 +64,10 @@ export default function Pantry() {
             <input type="date" value={form.expiry_date}
               onChange={e => setForm({...form, expiry_date: e.target.value})} />
           </div>
-          <button className="btn btn-primary" type="submit">+ Add</button>
+          <div className="form-group">
+            <label>&nbsp;</label>
+            <button className="btn btn-primary" type="submit" style={{ width: '100%' }}>+ Add</button>
+          </div>
         </form>
       </div>
 

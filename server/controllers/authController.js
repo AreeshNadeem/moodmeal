@@ -5,6 +5,9 @@ const jwt = require('jsonwebtoken');
 exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    if (password.length < 6 || password.length > 20) {
+      return res.status(400).json({ error: 'Password must be between 6 and 20 characters' });
+    }
     const [existing] = await db.query('SELECT id FROM users WHERE email = ?', [email]);
     if (existing.length) return res.status(400).json({ error: 'Email already in use' });
 

@@ -17,7 +17,6 @@
 
 .find-btn {
   white-space: nowrap;
-  height: 38px;
 }
 
 .results-count {
@@ -41,6 +40,21 @@
   cursor: pointer;
   border-left: 3px solid var(--border);
   transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+}
+
+.recipe-card-img-wrap {
+  width: calc(100% + 2rem);
+  margin: -1rem -1rem 0.5rem -1rem;
+  height: 160px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.recipe-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .recipe-card:hover {
@@ -62,8 +76,8 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 2px 8px;
-  border-radius: 2px;
+  padding: 4px 10px;
+  border-radius: 4px;
   background: var(--surface-2);
   color: var(--muted);
   border: 1px solid var(--border);
@@ -74,8 +88,8 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding: 2px 8px;
-  border-radius: 2px;
+  padding: 4px 10px;
+  border-radius: 4px;
   background: var(--cream);
   color: var(--primary-light);
 }
@@ -83,8 +97,8 @@
 .match-badge {
   font-size: 0.68rem;
   font-weight: 700;
-  padding: 2px 7px;
-  border-radius: 2px;
+  padding: 4px 10px;
+  border-radius: 4px;
   color: white;
 }
 
@@ -243,7 +257,6 @@
 
 .find-btn {
   white-space: nowrap;
-  height: 38px;
 }
 
 .recipe-grid {
@@ -264,23 +277,7 @@
   align-items: center;
 }
 
-.mood-badge {
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-transform: capitalize;
-  padding: 2px 8px;
-  border-radius: 20px;
-  background: #f3f4f6;
-  color: var(--text);
-}
 
-.match-badge {
-  font-size: 0.75rem;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 20px;
-  color: white;
-}
 
 .recipe-card h3 {
   font-size: 1.05rem;
@@ -339,18 +336,7 @@
   color: var(--primary);
 }
 
-/* Mood badge — no emoji, cleaner */
-.mood-badge {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 3px 10px;
-  border-radius: 2px;
-  background: var(--surface-2);
-  color: var(--muted);
-  border: 1px solid var(--border);
-}
+
 
 .recipe-cuisine-tag {
   font-size: 0.72rem;

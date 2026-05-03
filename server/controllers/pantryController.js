@@ -10,6 +10,7 @@ exports.getAll = async (req, res) => {
 
 exports.add = async (req, res) => {
   const { name, quantity, unit, expiry_date } = req.body;
+  if (quantity <= 0 || quantity > 10000) return res.status(400).json({ error: 'Quantity must be between 0.1 and 10000' });
   const [result] = await db.query(
     'INSERT INTO pantry_items (user_id, name, quantity, unit, expiry_date) VALUES (?, ?, ?, ?, ?)',
     [req.user.id, name, quantity, unit, expiry_date || null]
@@ -19,6 +20,7 @@ exports.add = async (req, res) => {
 
 exports.update = async (req, res) => {
   const { name, quantity, unit, expiry_date } = req.body;
+  if (quantity <= 0 || quantity > 10000) return res.status(400).json({ error: 'Quantity must be between 0.1 and 10000' });
   await db.query(
     'UPDATE pantry_items SET name=?, quantity=?, unit=?, expiry_date=? WHERE id=? AND user_id=?',
     [name, quantity, unit, expiry_date, req.params.id, req.user.id]

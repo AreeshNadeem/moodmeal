@@ -89,6 +89,11 @@ export default function MySaves() {
                 <div className="saves-grid">
                     {recipes.map(r => (
                         <div key={r.id} className="save-card card" onClick={() => setSelectedId(r.id)} style={{ cursor: 'pointer' }}>
+                            {r.image_url && (
+                                <div className="save-card-img-wrap">
+                                    <img src={r.image_url} alt={r.title} className="save-card-img" />
+                                </div>
+                            )}
                             <div className="save-card-top">
                                 <span className="save-mood-badge">{r.mood_tag}</span>
                                 <button
@@ -116,7 +121,7 @@ export default function MySaves() {
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="meta-icon">
                                         <line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                                     </svg>
-                                    Rs. {r.estimated_cost}
+                                    PKR {r.estimated_cost}
                                 </span>
                             </div>
 

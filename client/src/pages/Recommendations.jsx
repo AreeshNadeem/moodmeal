@@ -4,12 +4,13 @@ import RecipeCard from '../components/RecipeCard';
 import './Recommendations.css';
 
 export default function Recommendations() {
-  const [filters, setFilters] = useState({ mood: '', max_time: '', max_cost: '' });
+  const [filters, setFilters] = useState({ mood: '', max_time: '', max_cost: '', cuisine: '', difficulty: '', category: '' });
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(true);
   const [savedIds, setSavedIds] = useState(new Set());
   const [selectedId, setSelectedId] = useState(null);
   const [searched, setSearched] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Load all recipes on mount
   useEffect(() => {
@@ -34,11 +35,15 @@ export default function Recommendations() {
     const params = Object.fromEntries(
       Object.entries(filters).filter(([, v]) => v !== '')
     );
+    if (searchQuery.trim()) {
+      params.q = searchQuery.trim();
+    }
     fetchRecipes(params);
   };
 
   const handleReset = () => {
-    setFilters({ mood: '', max_time: '', max_cost: '' });
+    setFilters({ mood: '', max_time: '', max_cost: '', cuisine: '', difficulty: '', category: '' });
+    setSearchQuery('');
     setSearched(false);
     fetchRecipes({});
   };
@@ -67,6 +72,18 @@ export default function Recommendations() {
 
       <div className="card filter-card">
         <h3>What are you in the mood for?</h3>
+        
+        <div className="form-group" style={{ marginBottom: '1.25rem' }}>
+          <input 
+            type="text" 
+            placeholder="Search recipes, ingredients, or keywords..." 
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleSearch()}
+            style={{ padding: '0.8rem 1.2rem', fontSize: '1rem', borderRadius: '8px' }}
+          />
+        </div>
+
         <div className="filter-grid">
           <div className="form-group">
             <label>Mood</label>
@@ -75,6 +92,18 @@ export default function Recommendations() {
               <option value="comfort">Comfort</option>
               <option value="healthy">Healthy</option>
               <option value="indulgent">Indulgent</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Cuisine</label>
+            <select value={filters.cuisine} onChange={e => setFilters({ ...filters, cuisine: e.target.value })}>
+              <option value="">Any cuisine</option>
+              <option value="Pakistani">Pakistani</option>
+              <option value="Indian">Indian</option>
+              <option value="Continental">Continental</option>
+              <option value="Chinese">Chinese</option>
+              <option value="Italian">Italian</option>
+              <option value="Middle Eastern">Middle Eastern</option>
             </select>
           </div>
           <div className="form-group">
@@ -87,19 +116,48 @@ export default function Recommendations() {
             </select>
           </div>
           <div className="form-group">
-            <label>Max Budget (Rs.)</label>
-            <input type="number" placeholder="e.g. 300" value={filters.max_cost}
-              onChange={e => setFilters({ ...filters, max_cost: e.target.value })} />
+            <label>Max Budget (PKR)</label>
+            <input type="number" min="1" max="15000" placeholder="e.g. 5000" value={filters.max_cost}
+              onChange={e => {
+                let val = e.target.value;
+                if (val !== '' && Number(val) > 15000) val = '15000';
+                if (val !== '' && Number(val) < 1) val = '1';
+                setFilters({ ...filters, max_cost: val });
+              }} />
           </div>
-          <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-end' }}>
-            <button className="btn btn-primary find-btn" onClick={handleSearch}>
-              Find Meals
-            </button>
-            {searched && (
-              <button className="btn btn-outline find-btn" onClick={handleReset}>
-                Reset
+          <div className="form-group">
+            <label>Difficulty</label>
+            <select value={filters.difficulty} onChange={e => setFilters({ ...filters, difficulty: e.target.value })}>
+              <option value="">Any difficulty</option>
+              <option value="Easy">Easy</option>
+              <option value="Medium">Medium</option>
+              <option value="Hard">Hard</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>Meal Category</label>
+            <select value={filters.category} onChange={e => setFilters({ ...filters, category: e.target.value })}>
+              <option value="">Any category</option>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Main Course">Main Course</option>
+              <option value="Snack">Snack</option>
+              <option value="Dessert">Dessert</option>
+              <option value="Appetizer">Appetizer</option>
+            </select>
+          </div>
+
+          <div className="form-group" style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', justifyContent: 'flex-end' }}>
+            <label>&nbsp;</label>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <button className="btn btn-primary find-btn" onClick={handleSearch}>
+                Find Meals
               </button>
-            )}
+              {searched && (
+                <button className="btn btn-outline find-btn" onClick={handleReset}>
+                  Reset
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -138,6 +196,11 @@ export default function Recommendations() {
               className="recipe-card card"
               onClick={() => setSelectedId(r.id)}
             >
+              {r.image_url && (
+                <div className="recipe-card-img-wrap">
+                  <img src={r.image_url} alt={r.title} className="recipe-card-img" />
+                </div>
+              )}
               <div className="recipe-header">
                 <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
                   <span className="mood-badge">{r.mood_tag}</span>
@@ -171,7 +234,7 @@ export default function Recommendations() {
                   </svg>
                   {(r.prep_time_minutes || 0) + (r.cook_time_minutes || 0)} min
                 </span>
-                <span>Rs. {r.estimated_cost}</span>
+                <span>PKR {r.estimated_cost}</span>
                 <span className={`difficulty-tag diff-${r.difficulty?.toLowerCase()}`}>{r.difficulty}</span>
               </div>
 

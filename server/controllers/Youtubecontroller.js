@@ -9,15 +9,21 @@ exports.getTrendingVideos = async (req, res) => {
             return res.status(500).json({ error: 'YouTube API key not configured' });
         }
 
-        // Search for trending food/recipe videos
+        // Calculate date 30 days ago to ensure fresh trending content
+        const lastMonth = new Date();
+        lastMonth.setDate(lastMonth.getDate() - 30);
+
+        // Search for globally viral food trends from the last 30 days
         const searchRes = await axios.get(`${BASE_URL}/search`, {
             params: {
                 key: YOUTUBE_API_KEY,
                 part: 'snippet',
-                q: 'trending food recipe 2025',
+                q: 'viral recipe | tiktok food | trending food -hindi -india',
                 type: 'video',
                 videoCategoryId: '26', // Howto & Style — best for recipes
                 order: 'viewCount',
+                regionCode: 'US', // Set to US to pull western/global TikTok viral trends
+                publishedAfter: lastMonth.toISOString(),
                 maxResults: 12,
                 relevanceLanguage: 'en',
                 safeSearch: 'strict',

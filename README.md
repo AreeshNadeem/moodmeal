@@ -1,84 +1,28 @@
-# 🍽️ MoodMeal — Setup Guide
+# MoodMeal
+
+Moodmeal is a website application that tackles both the daily confusion of what to cook and the problem of food wastage. The application provides features such as mood based recipe recommendations, pantry management, expense tracking and an AI-powered chatbot that can answer user queries.
+
 
 ## Tech Stack
 - **Frontend:** React + Vite
 - **Backend:** Node.js + Express
 - **Database:** MySQL
-- **AI Chatbot:** Claude API (via Anthropic)
+- **AI Chatbot:** 
+
 
 ---
 
-## 📁 Folder Structure
+## How to Run the Project:
 
-```
-MoodMeal/
-├── client/                  ← React + Vite frontend
-│   ├── public/
-│   ├── src/
-│   │   ├── assets/
-│   │   ├── components/      ← Reusable UI components
-│   │   │   ├── Navbar.jsx
-│   │   │   └── ProtectedRoute.jsx
-│   │   ├── pages/           ← One file per screen
-│   │   │   ├── Login.jsx
-│   │   │   ├── Register.jsx
-│   │   │   ├── Home.jsx
-│   │   │   ├── Pantry.jsx
-│   │   │   ├── Recommendations.jsx
-│   │   │   ├── Expenses.jsx
-│   │   │   ├── Trending.jsx
-│   │   │   └── Chatbot.jsx
-│   │   ├── context/         ← React context (auth, pantry state)
-│   │   │   └── AuthContext.jsx
-│   │   ├── hooks/           ← Custom hooks
-│   │   ├── services/        ← Axios API calls
-│   │   │   └── api.js
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   ├── index.html
-│   ├── vite.config.js
-│   └── package.json
-│
-├── server/                  ← Node.js + Express backend
-│   ├── config/
-│   │   └── db.js            ← MySQL connection
-│   ├── controllers/         ← Business logic
-│   │   ├── authController.js
-│   │   ├── pantryController.js
-│   │   ├── recipeController.js
-│   │   ├── expenseController.js
-│   │   └── chatController.js
-│   ├── routes/              ← Express route definitions
-│   │   ├── auth.js
-│   │   ├── pantry.js
-│   │   ├── recipes.js
-│   │   ├── expenses.js
-│   │   └── chat.js
-│   ├── middleware/
-│   │   └── authMiddleware.js ← JWT verification
-│   ├── models/              ← SQL query helpers (or ORM)
-│   ├── database/
-│   │   └── schema.sql       ← All CREATE TABLE statements
-│   ├── .env                 ← DB credentials, JWT secret, API keys
-│   ├── index.js             ← Entry point
-│   └── package.json
-│
-└── README.md
-```
-
----
-
-## 🚀 Quick Start
-
-### 1. Clone / open the folder in VS Code
+### 1. Open the folder in VS Code
 
 ### 2. Setup the backend
 ```bash
 cd server
 npm install
-# Copy .env.example to .env and fill in your values
+# copy .env.example to .env and fill in your values
 cp .env.example .env
-# Import the database schema
+# import the database schema
 mysql -u root -p moodmeal < database/schema.sql
 npm run dev
 ```
@@ -95,20 +39,7 @@ Backend runs on `http://localhost:5000`
 
 ---
 
-## 🗄️ Database Tables (MySQL)
-
-| Table | Purpose |
-|---|---|
-| `users` | Auth — email, hashed password |
-| `pantry_items` | Ingredients with qty & expiry |
-| `recipes` | Recipe catalog |
-| `recipe_ingredients` | Many-to-many: recipes ↔ ingredients |
-| `expenses` | Grocery & takeaway spending log |
-| `chat_history` | Chatbot conversation logs |
-
----
-
-## 🔑 Environment Variables (server/.env)
+## Environment Variables
 
 ```
 DB_HOST=localhost
@@ -117,5 +48,7 @@ DB_PASSWORD=yourpassword
 DB_NAME=moodmeal
 JWT_SECRET=your_jwt_secret_key
 PORT=5000
-ANTHROPIC_API_KEY=your_key_here
+
+YOUTUBE_API_KEY=your_youtube_api_key
+GEMINI_API_KEY=your_gemini_api_key
 ```

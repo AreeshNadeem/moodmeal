@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import logoMouse from '../assets/logo-mouse.png';
 import './Navbar.css';
 
 const links = [
@@ -47,7 +48,10 @@ export default function Navbar() {
 
   return (
     <nav className="navbar">
-      <span className="navbar-brand">MoodMeal</span>
+      <span className="navbar-brand" style={{ display: 'flex', alignItems: 'center' }}>
+        <img src={logoMouse} alt="Logo" style={{ height: '50px', marginRight: '10px' }} />
+        MoodMeal
+      </span>
 
       <div className="navbar-links">
         {links.map(l => (

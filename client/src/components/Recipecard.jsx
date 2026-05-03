@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getRecipe, saveRecipe, unsaveRecipe } from '../services/api';
+import { getRecipe, saveRecipe, unsaveRecipe, addExpense } from '../services/api';
 import './RecipeCard.css';
 
 export default function RecipeCard({ recipeId, onClose, initialSaved = false }) {
@@ -7,6 +7,8 @@ export default function RecipeCard({ recipeId, onClose, initialSaved = false }) 
     const [loading, setLoading] = useState(true);
     const [saved, setSaved] = useState(initialSaved);
     const [activeTab, setActiveTab] = useState('ingredients');
+    const [expenseLogged, setExpenseLogged] = useState(false);
+    const [logging, setLogging] = useState(false);
 
     useEffect(() => {
         getRecipe(recipeId)
@@ -28,6 +30,24 @@ export default function RecipeCard({ recipeId, onClose, initialSaved = false }) 
         } else {
             await saveRecipe(recipeId);
             setSaved(true);
+        }
+    };
+
+    const handleCookAndLog = async () => {
+        if (expenseLogged || logging) return;
+        setLogging(true);
+        try {
+            await addExpense({
+                category: 'grocery',
+                amount: recipe.estimated_cost || 0,
+                description: `Cooked: ${recipe.title}`,
+                expense_date: new Date().toISOString().split('T')[0]
+            });
+            setExpenseLogged(true);
+        } catch (err) {
+            console.error('Failed to log expense:', err);
+        } finally {
+            setLogging(false);
         }
     };
 
@@ -102,6 +122,15 @@ export default function RecipeCard({ recipeId, onClose, initialSaved = false }) 
                                 </button>
                             </div>
 
+                            <button
+                                className={`btn ${expenseLogged ? 'btn-outline' : 'btn-primary'}`}
+                                style={{ width: '100%', marginBottom: '1.25rem', justifyContent: 'center' }}
+                                onClick={handleCookAndLog}
+                                disabled={expenseLogged || logging}
+                            >
+                                {logging ? 'Logging...' : expenseLogged ? 'Expense Logged ✓' : `Cook This & Log Expense (PKR ${recipe.estimated_cost})`}
+                            </button>
+
                             {/* Stats row */}
                             <div className="rc-stats">
                                 <div className="rc-stat">
@@ -149,7 +178,7 @@ export default function RecipeCard({ recipeId, onClose, initialSaved = false }) 
                                         <line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                                     </svg>
                                     <div>
-                                        <span className="rc-stat-val">Rs. {recipe.estimated_cost}</span>
+                                        <span className="rc-stat-val">PKR {recipe.estimated_cost}</span>
                                         <span className="rc-stat-lbl">Est. Cost</span>
                                     </div>
                                 </div>

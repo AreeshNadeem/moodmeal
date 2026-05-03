@@ -3,7 +3,7 @@ const db = require('../config/db');
 // Main recommendation engine — single bulk query, no N+1
 exports.recommend = async (req, res) => {
   try {
-    const { mood, max_time, max_cost } = req.query;
+    const { mood, max_time, max_cost, cuisine, difficulty, category, dietary, q } = req.query;
 
     // Get user pantry
     const [pantry] = await db.query(
@@ -15,9 +15,21 @@ exports.recommend = async (req, res) => {
     // Build recipe filter query
     let query = 'SELECT * FROM recipes WHERE 1=1';
     const params = [];
+    if (q) {
+      query += ` AND (
+        title LIKE ? 
+        OR description LIKE ? 
+        OR id IN (SELECT recipe_id FROM recipe_ingredients WHERE ingredient_name LIKE ?)
+      )`;
+      params.push(`%${q}%`, `%${q}%`, `%${q}%`);
+    }
     if (mood) { query += ' AND mood_tag = ?'; params.push(mood); }
     if (max_time) { query += ' AND (prep_time_minutes + cook_time_minutes) <= ?'; params.push(Number(max_time)); }
     if (max_cost) { query += ' AND estimated_cost <= ?'; params.push(Number(max_cost)); }
+    if (cuisine) { query += ' AND cuisine = ?'; params.push(cuisine); }
+    if (difficulty) { query += ' AND difficulty = ?'; params.push(difficulty); }
+    if (category) { query += ' AND category = ?'; params.push(category); }
+    if (dietary) { query += ' AND (title LIKE ? OR description LIKE ?)'; params.push(`%${dietary}%`, `%${dietary}%`); }
     query += ' ORDER BY title ASC';
 
     const [recipes] = await db.query(query, params);

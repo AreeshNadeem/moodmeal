@@ -51,7 +51,7 @@ exports.updatePassword = async (req, res) => {
         const [rows] = await db.query('SELECT password_hash FROM users WHERE id = ?', [req.user.id]);
         const match = await bcrypt.compare(current_password, rows[0].password_hash);
         if (!match) return res.status(400).json({ error: 'Current password is incorrect' });
-        if (new_password.length < 6) return res.status(400).json({ error: 'New password must be at least 6 characters' });
+        if (new_password.length < 6 || new_password.length > 20) return res.status(400).json({ error: 'New password must be between 6 and 20 characters' });
         const hash = await bcrypt.hash(new_password, 10);
         await db.query('UPDATE users SET password_hash = ? WHERE id = ?', [hash, req.user.id]);
         res.json({ message: 'Password updated successfully' });
@@ -72,6 +72,10 @@ exports.updatePreferences = async (req, res) => {
             currency,
             language,
         } = req.body;
+
+        if (weekly_budget !== null && weekly_budget !== '' && (Number(weekly_budget) < 200 || Number(weekly_budget) > 20000)) {
+            return res.status(400).json({ error: 'Weekly budget must be between Rs 200 and Rs 20,000' });
+        }
 
         await db.query(`
       INSERT INTO user_preferences

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { getExpiring, getExpenseSummary, getRecommendations, getAllRecipes, getSavedIds, saveRecipe, unsaveRecipe } from '../services/api';
+import imgSpaghetti from '../assets/hero_spaghetti.png';
+import imgSalad from '../assets/hero_salad.png';
 import './Home.css';
 
 export default function Home() {
@@ -43,28 +45,43 @@ export default function Home() {
   ];
 
   return (
-    <div className="page">
-      <div className="home-hero card">
-        <h2>Ready to Cook, {user?.name?.split(' ')[0]}?</h2>
-        <p>What would you like to do today?</p>
-        <Link to="/recommendations" className="btn btn-primary">Get Meal Suggestions</Link>
+    <div className="home-container">
+      <div className="home-hero">
+        <div className="hero-content">
+          <div className="hero-text-col">
+            <h1 className="brand-title">MOODMEAL</h1>
+            <p className="hero-tagline">
+              At MoodMeal, we turn everyday ingredients and a little inspiration into perfect meals. Delicious, effortless, and wonderfully satisfying — tailored to what you crave. What would you like to do today?
+            </p>
+            <Link to="/recommendations" className="hero-btn">Get Meal Suggestions</Link>
+          </div>
+          <div className="hero-img-col">
+            <div className="floating-img img-one">
+              <img src={imgSalad} alt="Salad Bowl" />
+            </div>
+            <div className="floating-img img-two">
+              <img src={imgSpaghetti} alt="Spaghetti Bowl" />
+            </div>
+          </div>
+        </div>
       </div>
 
-      {expiring.length > 0 && (
-        <div className="expiry-alert card">
-          <h3>Expiring Soon</h3>
-          <ul>
-            {expiring.map(item => (
-              <li key={item.id}>
-                <strong>{item.name}</strong> — {item.quantity} {item.unit} — expires {item.expiry_date?.split('T')[0]}
-              </li>
-            ))}
-          </ul>
-          <Link to="/recommendations?prioritize=expiry" className="btn btn-outline" style={{ marginTop: '0.75rem' }}>
-            Find recipes using these
-          </Link>
-        </div>
-      )}
+      <div className="page">
+        {expiring.length > 0 && (
+          <div className="expiry-alert card">
+            <h3>Expiring Soon</h3>
+            <ul>
+              {expiring.map(item => (
+                <li key={item.id}>
+                  <strong>{item.name}</strong> — {item.quantity} {item.unit} — expires {item.expiry_date?.split('T')[0]}
+                </li>
+              ))}
+            </ul>
+            <Link to="/recommendations?prioritize=expiry" className="btn btn-outline" style={{ marginTop: '0.75rem' }}>
+              Find recipes using these
+            </Link>
+          </div>
+        )}
 
       <div className="home-stats">
         <div className="stat-card card">
@@ -72,7 +89,7 @@ export default function Home() {
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
           </div>
           <div>
-            <div className="stat-value">Rs. {totalSpend.toLocaleString()}</div>
+            <div className="stat-value">PKR {totalSpend.toLocaleString()}</div>
             <div className="stat-label">Spent this month</div>
           </div>
         </div>
@@ -158,6 +175,7 @@ export default function Home() {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 }

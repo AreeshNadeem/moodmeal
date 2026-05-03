@@ -10,6 +10,7 @@ exports.getAll = async (req, res) => {
 
 exports.add = async (req, res) => {
   const { category, amount, description, expense_date } = req.body;
+  if (amount <= 0 || amount > 50000) return res.status(400).json({ error: 'Expense amount must be between 1 and 50,000 Rs' });
   const [result] = await db.query(
     'INSERT INTO expenses (user_id, category, amount, description, expense_date) VALUES (?,?,?,?,?)',
     [req.user.id, category, amount, description, expense_date]

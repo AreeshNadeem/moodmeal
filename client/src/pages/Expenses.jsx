@@ -1,18 +1,24 @@
 import { useEffect, useState } from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { getExpenses, addExpense, deleteExpense, getExpenseSummary } from '../services/api';
+import { getExpenses, addExpense, deleteExpense, getExpenseSummary, getProfile } from '../services/api';
 import './Expenses.css';
 
-const COLORS = ['#f97316', '#22c55e', '#3b82f6'];
+const COLORS = ['#84582B', '#9D9167', '#E8D1A7'];
 
 export default function Expenses() {
   const [expenses, setExpenses] = useState([]);
   const [summary, setSummary]   = useState([]);
+  const [budget, setBudget]     = useState(null);
   const [form, setForm] = useState({ category: 'grocery', amount: '', description: '', expense_date: new Date().toISOString().split('T')[0] });
 
   const fetchAll = () => {
-    getExpenses().then(r => setExpenses(r.data));
-    getExpenseSummary().then(r => setSummary(r.data));
+    getExpenses().then(r => setExpenses(r.data)).catch(() => {});
+    getExpenseSummary().then(r => setSummary(r.data)).catch(() => {});
+    getProfile().then(r => {
+      if (r.data.preferences?.weekly_budget) {
+        setBudget(Number(r.data.preferences.weekly_budget) * 4);
+      }
+    }).catch(() => {});
   };
   useEffect(() => { fetchAll(); }, []);
 
@@ -49,9 +55,14 @@ export default function Expenses() {
                 </select>
               </div>
               <div className="form-group">
-                <label>Amount (Rs.)</label>
-                <input required type="number" min="0" placeholder="e.g. 250" value={form.amount}
-                  onChange={e => setForm({...form, amount: e.target.value})} />
+                <label>Amount (PKR)</label>
+                <input required type="number" min="1" max="50000" placeholder="e.g. 250" value={form.amount}
+                  onChange={e => {
+                    let val = e.target.value;
+                    if (val !== '' && Number(val) > 50000) val = '50000';
+                    if (val !== '' && Number(val) < 0) val = '1';
+                    setForm({...form, amount: val});
+                  }} />
               </div>
               <div className="form-group">
                 <label>Description</label>
@@ -69,13 +80,36 @@ export default function Expenses() {
 
           {chartData.length > 0 && (
             <div className="card" style={{marginTop:'1rem'}}>
-              <h3 style={{marginBottom:'0.5rem'}}>This Month: Rs. {total.toLocaleString()}</h3>
+              <h3 style={{marginBottom:'0.5rem'}}>This Month: PKR {total.toLocaleString()}</h3>
+              
+              {budget && budget > 0 ? (
+                <div style={{ marginBottom: '1.5rem', padding: '1rem', background: 'var(--surface-2)', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.85rem', fontWeight: '600' }}>
+                        <span>Budget Progress</span>
+                        <span>{((total / budget) * 100).toFixed(1)}% (PKR {budget.toLocaleString()} Limit)</span>
+                    </div>
+                    <div style={{ width: '100%', height: '10px', background: '#e0e0e0', borderRadius: '5px', overflow: 'hidden' }}>
+                        <div style={{ 
+                            height: '100%', 
+                            width: `${Math.min((total / budget) * 100, 100)}%`, 
+                            background: total > budget ? 'var(--danger)' : 'var(--success)',
+                            transition: 'width 0.5s ease'
+                        }} />
+                    </div>
+                    {total > budget && <p style={{ color: 'var(--danger)', fontSize: '0.75rem', marginTop: '0.5rem', fontWeight: 'bold' }}>You have exceeded your estimated monthly budget!</p>}
+                </div>
+              ) : (
+                <div style={{ marginBottom: '1.5rem', padding: '1rem', background: '#FFF8F1', borderLeft: '4px solid var(--primary)', borderRadius: '4px', fontSize: '0.9rem', color: 'var(--text)' }}>
+                  <strong>Want to track your goal?</strong> Set a Weekly Budget in your Settings to unlock the smart budget progress bar!
+                </div>
+              )}
+
               <ResponsiveContainer width="100%" height={220}>
                 <PieChart>
-                  <Pie data={chartData} cx="50%" cy="50%" outerRadius={80} dataKey="value" label={({name,value}) => `${name}: Rs.${value}`}>
+                  <Pie data={chartData} cx="50%" cy="50%" outerRadius={80} dataKey="value" label={({name,value}) => `${name}: PKR ${value}`}>
                     {chartData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
                   </Pie>
-                  <Tooltip formatter={v => `Rs. ${v}`} />
+                  <Tooltip formatter={v => `PKR ${v}`} />
                 </PieChart>
               </ResponsiveContainer>
             </div>
@@ -89,7 +123,7 @@ export default function Expenses() {
               <div>
                 <div className="expense-top">
                   <span className="cat-badge">{e.category}</span>
-                  <strong>Rs. {Number(e.amount).toLocaleString()}</strong>
+                  <strong>PKR {Number(e.amount).toLocaleString()}</strong>
                 </div>
                 {e.description && <p className="expense-desc">{e.description}</p>}
                 <span className="expense-date">{e.expense_date?.split('T')[0]}</span>

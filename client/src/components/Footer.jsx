@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import logoMouse from '../assets/logo-mouse.png';
 import './Footer.css';
 
 export default function Footer() {
@@ -10,7 +11,10 @@ export default function Footer() {
 
                 {/* Brand col */}
                 <div className="footer-brand-col">
-                    <span className="footer-logo">MoodMeal</span>
+                    <span className="footer-logo" style={{ display: 'flex', alignItems: 'center' }}>
+                        <img src={logoMouse} alt="Logo" style={{ height: '39px', marginRight: '10px' }} />
+                        MoodMeal
+                    </span>
                     <p className="footer-tagline">
                         Smart meal decisions powered by your pantry, mood, and budget.
                     </p>
