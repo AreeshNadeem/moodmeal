@@ -21,12 +21,13 @@ app.use('/api/saves', require('./routes/saves'));
 app.use('/api/settings', require('./routes/Settings'));
 
 // Serve static files from the React app
-app.use(express.static(path.join(process.cwd(), 'client/dist')));
+const clientDistPath = path.join(__dirname, '..', 'client', 'dist');
+app.use(express.static(clientDistPath));
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
-  res.sendFile(path.join(process.cwd(), 'client/dist/index.html'));
+  res.sendFile(path.join(clientDistPath, 'index.html'));
 });
 
 // For local development
