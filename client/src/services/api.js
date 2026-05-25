@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const api = axios.create({ baseURL: '/api' });
+// In development: VITE_API_URL is empty, Vite dev server proxies /api → localhost:5000
+// In production:  VITE_API_URL = 'https://<your-backend>.vercel.app'  (set in Vercel dashboard)
+const BASE_URL = (import.meta.env.VITE_API_URL || '') + '/api';
+const api = axios.create({ baseURL: BASE_URL });
 
 // Attach JWT to every request automatically
 api.interceptors.request.use(config => {
