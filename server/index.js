@@ -23,6 +23,10 @@ app.use(cors({
 app.use(express.json());
 
 // Routes
+app.get('/', (req, res) => {
+  res.send('MoodMeal API is running successfully!');
+});
+
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/pantry', require('./routes/pantry'));
 app.use('/api/recipes', require('./routes/recipes'));
